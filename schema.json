@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Work-Agent/PluginRegistry/main/schema.json",
+  "title": "WorkStudio plugin registry entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "description", "version", "source", "sha256"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "maxLength": 64,
+      "description": "插件 id，必须与文件名、package.json 的 workstudio.id 一致"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 240
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^https://",
+      "description": "自包含 zip 的 https 地址"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^https://",
+      "description": "插件源码仓库，用于审计"
+    },
+    "icon": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "category": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "maxLength": 32 },
+      "uniqueItems": true,
+      "maxItems": 12
+    },
+    "deprecated": {
+      "type": "boolean",
+      "description": "为 true 时应用不再推荐安装，但保留更新信息"
+    }
+  }
+}
