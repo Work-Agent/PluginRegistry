@@ -54,6 +54,46 @@ scripts/              # 校验与生成脚本（无第三方依赖）
 
 第一方插件可以在各自仓库的 release workflow 里自动更新本仓库的条目，避免手工 PR。
 
+## 自动合并
+
+自动合并只对可信机器人（当前是 `workstudio-registry-bot[bot]`）发起的 PR 生效，并额外要求：
+
+- PR 来自本仓库，不是 fork
+- 只修改一个 `plugins/<id>.json`
+- 条目已存在，不是新插件
+- `repo` 不变，`source` 仍是该仓库的 GitHub Release 资产
+- 新版本 semver 大于旧版本
+- 除 `version` / `source` / `sha256` 外，其他字段不变
+- 没有 `manual-review` 标签
+- `validate` 和 `verify-artifact` 两个 check 通过
+
+`verify-artifact` 会下载 PR 中的 zip 并实际计算 sha256，结果必须与条目一致；目前只支持 `https://github.com` 的 Release 资产。其他来源需要人工审核。
+
+### 仓库设置
+
+要启用自动合并，需要在 PluginRegistry 配置：
+
+1. `Settings → General → Allow auto-merge` 打开
+2. `main` 的 branch protection / ruleset 要求：
+   - `validate`
+   - `verify-artifact`
+3. 自动合并 workflow 需要 GitHub App secrets：
+   - `REGISTRY_APP_CLIENT_ID`
+   - `REGISTRY_APP_PRIVATE_KEY`
+
+PluginRegistry 是 public 时，可以把现有 Organization secret 的访问范围加上
+PluginRegistry；也可以在本仓库单独建 Repository secret。
+
+App 至少需要：
+
+- `Contents: write`
+- `Pull requests: write`
+- 安装到 `PluginRegistry`
+
+自动合并使用 App token，因此合并后的 `push` 会正常触发 `index.yml`，重新生成 `index.json`。
+
+如果启用了 required review，App 不能自动批准，auto-merge 会等待人工 review；要么由人工合并，要么在 ruleset 中为 App 配置 bypass。
+
 ## 本地校验
 
 ```bash

@@ -1,0 +1,89 @@
+name: auto-merge
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  auto-merge:
+    name: auto-merge
+    # 只处理来自 Registry bot、且不是 fork 的 PR。
+    if: >
+      github.event.pull_request.user.login == 'workstudio-registry-bot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      # 只 checkout base 分支；PR 内容通过 API 读取，不执行 PR 代码。
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Check App secrets
+        id: app-secrets
+        env:
+          APP_CLIENT_ID: ${{ secrets.REGISTRY_APP_CLIENT_ID || vars.REGISTRY_APP_CLIENT_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.REGISTRY_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APP_CLIENT_ID" ] || [ -z "$APP_PRIVATE_KEY" ]; then
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Auto-merge disabled: missing REGISTRY_APP_CLIENT_ID / REGISTRY_APP_PRIVATE_KEY."
+          else
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Registry app token
+        id: app
+        if: steps.app-secrets.outputs.available == 'true'
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.REGISTRY_APP_CLIENT_ID || vars.REGISTRY_APP_CLIENT_ID }}
+          private-key: ${{ secrets.REGISTRY_APP_PRIVATE_KEY }}
+          owner: Work-Agent
+          repositories: PluginRegistry
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Check auto-merge eligibility
+        id: eligible
+        if: steps.app-secrets.outputs.available == 'true'
+        env:
+          GITHUB_TOKEN: ${{ steps.app.outputs.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node scripts/auto-merge-eligible.mjs
+
+      - name: Enable auto-merge
+        if: steps.app-secrets.outputs.available == 'true' && steps.eligible.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          set -euo pipefail
+          gh pr merge "${{ github.event.pull_request.number }}" \
+            --repo "${{ github.repository }}" \
+            --squash --auto
+
+      - name: Disable stale auto-merge
+        if: steps.app-secrets.outputs.available == 'true' && steps.eligible.outputs.eligible != 'true'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          gh pr merge "${{ github.event.pull_request.number }}" \
+            --repo "${{ github.repository }}" --disable-auto || true
+
+      - name: Manual review required
+        if: steps.app-secrets.outputs.available != 'true' || steps.eligible.outputs.eligible != 'true'
+        run: |
+          echo "Manual review required: ${{ steps.eligible.outputs.reason }}"
+          echo "**Manual review required:** ${{ steps.eligible.outputs.reason }}" >> "$GITHUB_STEP_SUMMARY"

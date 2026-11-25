@@ -3,7 +3,10 @@ import { readFile, readdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const SCRIPT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+export const ROOT = process.env.REGISTRY_ROOT
+  ? resolve(process.env.REGISTRY_ROOT)
+  : SCRIPT_ROOT;
 export const PLUGINS_DIR = join(ROOT, 'plugins');
 export const INDEX_FILE = join(ROOT, 'index.json');
 
