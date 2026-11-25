@@ -1,4 +1,21 @@
 {
   "schemaVersion": 1,
-  "entries": []
+  "entries": [
+    {
+      "id": "markdown-editor",
+      "name": "Markdown 编辑器",
+      "description": "支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器",
+      "version": "0.1.0",
+      "repo": "https://github.com/Work-Agent/MarkdownEditor",
+      "source": "https://github.com/Work-Agent/MarkdownEditor/releases/download/0.1/markdown-editor-0.1.0.zip",
+      "sha256": "31b6ce1bd43d48358917b1a6efa89236560c46d7f56ec7ac192ea410694314bf",
+      "icon": "book",
+      "category": "文档",
+      "tags": [
+        "markdown",
+        "editor",
+        "live-preview"
+      ]
+    }
+  ]
 }
