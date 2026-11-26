@@ -1,5 +1,6 @@
 {
   "id": "markdown-editor",
+  "builtin": true,
   "name": "Markdown 编辑器",
   "description": "支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器",
   "version": "0.1.0",

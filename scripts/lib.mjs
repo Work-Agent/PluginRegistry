@@ -13,6 +13,13 @@ export const README_FILE = join(ROOT, 'README.md');
 export const README_START = '<!-- plugins:start -->';
 export const README_END = '<!-- plugins:end -->';
 
+/** 只有随 WorkStudio 安装包内置的插件才允许声明 builtin；新增内置插件时同步 schema.json。 */
+export const BUILTIN_PLUGIN_IDS = new Set([
+  'html-editor',
+  'markdown-editor',
+  'text-editor',
+]);
+
 const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
 const VERSION_RE = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
 const SHA_RE = /^[a-f0-9]{64}$/;
@@ -28,6 +35,7 @@ const ENTRY_FIELDS = new Set([
   'category',
   'tags',
   'deprecated',
+  'builtin',
 ]);
 
 /** 读取 plugins/*.json；返回文件与解析结果，不校验。 */
@@ -126,6 +134,17 @@ export function validateEntry(entry, file) {
   if (entry.deprecated !== undefined && typeof entry.deprecated !== 'boolean') {
     fail('deprecated 必须是布尔值');
   }
+  if (entry.builtin !== undefined) {
+    if (!BUILTIN_PLUGIN_IDS.has(entry.id)) {
+      fail(
+        `builtin 仅允许内置插件使用：${[...BUILTIN_PLUGIN_IDS].join(' / ')}`,
+      );
+    } else if (entry.builtin !== true) {
+      fail('builtin 仅用于标记内置插件，值必须为 true');
+    }
+  } else if (BUILTIN_PLUGIN_IDS.has(entry.id)) {
+    fail('内置插件必须声明 "builtin": true');
+  }
   return errors;
 }
 
@@ -219,7 +238,8 @@ export function buildReadmeSection(entries) {
     '| --- | --- | --- | --- | --- | --- |',
   );
   for (const entry of entries) {
-    const name = `**${escapeCell(entry.name)}**<br>\`${entry.id}\``;
+    const builtin = entry.builtin ? ' <code>内置</code>' : '';
+    const name = `**${escapeCell(entry.name)}**${builtin}<br>\`${entry.id}\``;
     const version = link(escapeLinkText(entry.version), entry.source);
     const versionCell = entry.deprecated ? `${version}（已下架）` : version;
     const tags = entry.tags?.length ? entry.tags.map(code).join(' ') : '—';

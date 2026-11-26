@@ -11,8 +11,8 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 
 | 插件 | 说明 | 版本 | 分类 | 标签 | 仓库 |
 | --- | --- | --- | --- | --- | --- |
-| **HTML 编辑器**<br>`html-editor` | HTML 编辑器：源码编辑、分屏预览与保存 | [0.1.0](<https://github.com/Work-Agent/HTMLEditor/releases/download/v0.1.0/html-editor-0.1.0.zip>) | 开发 | <code>html</code> <code>editor</code> <code>preview</code> | [Work-Agent/HTMLEditor](<https://github.com/Work-Agent/HTMLEditor>) |
-| **Markdown 编辑器**<br>`markdown-editor` | 支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器 | [0.1.0](<https://github.com/Work-Agent/MarkdownEditor/releases/download/0.1/markdown-editor-0.1.0.zip>) | 文档 | <code>markdown</code> <code>editor</code> <code>live-preview</code> | [Work-Agent/MarkdownEditor](<https://github.com/Work-Agent/MarkdownEditor>) |
+| **HTML 编辑器** <code>内置</code><br>`html-editor` | HTML 编辑器：源码编辑、分屏预览与保存 | [0.1.0](<https://github.com/Work-Agent/HTMLEditor/releases/download/v0.1.0/html-editor-0.1.0.zip>) | 开发 | <code>html</code> <code>editor</code> <code>preview</code> | [Work-Agent/HTMLEditor](<https://github.com/Work-Agent/HTMLEditor>) |
+| **Markdown 编辑器** <code>内置</code><br>`markdown-editor` | 支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器 | [0.1.0](<https://github.com/Work-Agent/MarkdownEditor/releases/download/0.1/markdown-editor-0.1.0.zip>) | 文档 | <code>markdown</code> <code>editor</code> <code>live-preview</code> | [Work-Agent/MarkdownEditor](<https://github.com/Work-Agent/MarkdownEditor>) |
 <!-- plugins:end -->
 
 ## 提交插件
@@ -23,6 +23,8 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 4. 提交 PR，CI 会自动校验。
 
 新插件需要人工 review；已有插件更新 `version` / `source` / `sha256` 且校验通过后会自动合并。第一方插件可以在各自的 release workflow 中自动提交更新。
+
+`builtin` 只允许内置插件填写，普通插件添加该字段会被 CI 拒绝。
 
 ## 条目格式
 
@@ -44,6 +46,7 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 | 字段 | 必填 | 说明 |
 | --- | --- | --- |
 | `id` | 是 | 必须等于文件名与 zip 内 `package.json` 的 `workstudio.id` |
+| `builtin` | 内置插件必填 | 是否随 WorkStudio 安装包内置；仅限 `text-editor` / `markdown-editor` / `html-editor`，值为 `true` |
 | `name` / `description` | 是 | 展示信息 |
 | `version` | 是 | semver，必须与 zip 内 `package.json` 一致 |
 | `source` | 是 | 自包含 zip 的 https 地址 |
