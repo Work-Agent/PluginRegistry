@@ -1,0 +1,20 @@
+{
+  "id": "text-editor",
+  "name": "纯文本编辑器",
+  "description": "字节保真的纯文本 / 配置 / 日志编辑器：保留编码、BOM 与换行",
+  "version": "0.1.0",
+  "repo": "https://github.com/Work-Agent/TextEditor",
+  "source": "https://github.com/Work-Agent/TextEditor/releases/download/v0.1.0/text-editor-0.1.0.zip",
+  "sha256": "a964f6dffa07ea5c32964d003751bacde02e673a10414c20faeac8d531682066",
+  "icon": "file-text",
+  "category": "开发",
+  "tags": [
+    "text",
+    "editor",
+    "config",
+    "yaml",
+    "toml",
+    "log",
+    "encoding"
+  ]
+}
