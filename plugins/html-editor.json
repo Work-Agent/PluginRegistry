@@ -1,0 +1,16 @@
+{
+  "id": "html-editor",
+  "name": "HTML 编辑器",
+  "description": "HTML 编辑器：源码编辑、分屏预览与保存",
+  "version": "0.1.0",
+  "repo": "https://github.com/Work-Agent/HTMLEditor",
+  "source": "https://github.com/Work-Agent/HTMLEditor/releases/download/v0.1.0/html-editor-0.1.0.zip",
+  "sha256": "0dd7c42709c1f1b4d393e79d85e6c18d8052f3ab48eda1d4be4b6b6eb681ba37",
+  "icon": "code",
+  "category": "开发",
+  "tags": [
+    "html",
+    "editor",
+    "preview"
+  ]
+}
