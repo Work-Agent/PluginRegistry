@@ -13,7 +13,7 @@ export const README_FILE = join(ROOT, 'README.md');
 export const README_START = '<!-- plugins:start -->';
 export const README_END = '<!-- plugins:end -->';
 
-/** 只有随 WorkStudio 安装包内置的插件才允许声明 builtin；新增内置插件时同步 schema.json。 */
+/** 由注册表决定哪些 id 内置；build-index 会为这些 id 注入 builtin。 */
 export const BUILTIN_PLUGIN_IDS = new Set([
   'html-editor',
   'markdown-editor',
@@ -35,7 +35,6 @@ const ENTRY_FIELDS = new Set([
   'category',
   'tags',
   'deprecated',
-  'builtin',
 ]);
 
 /** 读取 plugins/*.json；返回文件与解析结果，不校验。 */
@@ -70,7 +69,13 @@ export function validateEntry(entry, file) {
     return errors;
   }
   for (const key of Object.keys(entry)) {
-    if (!ENTRY_FIELDS.has(key)) fail(`未知字段：${key}`);
+    if (!ENTRY_FIELDS.has(key)) {
+      fail(
+        key === 'builtin'
+          ? 'builtin 由注册表生成，条目中不能声明'
+          : `未知字段：${key}`,
+      );
+    }
   }
   for (const key of [
     'id',
@@ -134,17 +139,6 @@ export function validateEntry(entry, file) {
   if (entry.deprecated !== undefined && typeof entry.deprecated !== 'boolean') {
     fail('deprecated 必须是布尔值');
   }
-  if (entry.builtin !== undefined) {
-    if (!BUILTIN_PLUGIN_IDS.has(entry.id)) {
-      fail(
-        `builtin 仅允许内置插件使用：${[...BUILTIN_PLUGIN_IDS].join(' / ')}`,
-      );
-    } else if (entry.builtin !== true) {
-      fail('builtin 仅用于标记内置插件，值必须为 true');
-    }
-  } else if (BUILTIN_PLUGIN_IDS.has(entry.id)) {
-    fail('内置插件必须声明 "builtin": true');
-  }
   return errors;
 }
 
@@ -169,11 +163,13 @@ export async function loadValidEntries() {
   return { entries, errors };
 }
 
-/** 生成确定性 index（不含时间戳，便于 CI 做 --check）。 */
+/** 生成确定性 index；builtin 只由注册表白名单注入，条目不能自行声明。 */
 export function buildIndex(entries) {
   return {
     schemaVersion: 1,
-    entries,
+    entries: entries.map((entry) =>
+      BUILTIN_PLUGIN_IDS.has(entry.id) ? { ...entry, builtin: true } : entry,
+    ),
   };
 }
 
@@ -238,7 +234,9 @@ export function buildReadmeSection(entries) {
     '| --- | --- | --- | --- | --- | --- |',
   );
   for (const entry of entries) {
-    const builtin = entry.builtin ? ' <code>内置</code>' : '';
+    const builtin = BUILTIN_PLUGIN_IDS.has(entry.id)
+      ? ' <code>内置</code>'
+      : '';
     const name = `**${escapeCell(entry.name)}**${builtin}<br>\`${entry.id}\``;
     const version = link(escapeLinkText(entry.version), entry.source);
     const versionCell = entry.deprecated ? `${version}（已下架）` : version;

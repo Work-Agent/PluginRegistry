@@ -1,6 +1,5 @@
 {
   "id": "html-editor",
-  "builtin": true,
   "name": "HTML 编辑器",
   "description": "HTML 编辑器：源码编辑、分屏预览与保存",
   "version": "0.1.0",

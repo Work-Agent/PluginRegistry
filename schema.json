@@ -1,12 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/Work-Agent/PluginRegistry/main/schema.json",
-  "$defs": {
-    "builtinId": {
-      "$comment": "与 scripts/lib.mjs 的 BUILTIN_PLUGIN_IDS 保持一致",
-      "enum": ["html-editor", "markdown-editor", "text-editor"]
-    }
-  },
+  "$comment": "plugins/*.json 条目格式；index.json 中的 builtin 由注册表白名单自动注入，不属于条目字段",
   "title": "WorkStudio plugin registry entry",
   "type": "object",
   "additionalProperties": false,
@@ -62,29 +57,6 @@
     "deprecated": {
       "type": "boolean",
       "description": "为 true 时应用不再推荐安装，但保留更新信息"
-    },
-    "builtin": {
-      "const": true,
-      "description": "随 WorkStudio 安装包内置；仅允许受信任的内置插件使用"
     }
-  },
-  "allOf": [
-    {
-      "if": { "required": ["builtin"] },
-      "then": {
-        "properties": {
-          "id": { "$ref": "#/$defs/builtinId" }
-        }
-      }
-    },
-    {
-      "if": {
-        "required": ["id"],
-        "properties": {
-          "id": { "$ref": "#/$defs/builtinId" }
-        }
-      },
-      "then": { "required": ["builtin"] }
-    }
-  ]
+  }
 }

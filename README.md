@@ -24,7 +24,7 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 
 新插件需要人工 review；已有插件更新 `version` / `source` / `sha256` 且校验通过后会自动合并。第一方插件可以在各自的 release workflow 中自动提交更新。
 
-`builtin` 只允许内置插件填写，普通插件添加该字段会被 CI 拒绝。
+内置资格由插件注册表决定：`index.json` 中的 `builtin` 按注册表白名单自动注入，`plugins/*.json` 不能声明该字段。
 
 ## 条目格式
 
@@ -46,7 +46,6 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 | 字段 | 必填 | 说明 |
 | --- | --- | --- |
 | `id` | 是 | 必须等于文件名与 zip 内 `package.json` 的 `workstudio.id` |
-| `builtin` | 内置插件必填 | 是否随 WorkStudio 安装包内置；仅限 `text-editor` / `markdown-editor` / `html-editor`，值为 `true` |
 | `name` / `description` | 是 | 展示信息 |
 | `version` | 是 | semver，必须与 zip 内 `package.json` 一致 |
 | `source` | 是 | 自包含 zip 的 https 地址 |
