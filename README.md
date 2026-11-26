@@ -7,9 +7,23 @@ WorkStudio 的可安装插件清单。应用在运行期拉取本仓库生成的
 ```text
 plugins/<id>.json     # 一个插件一个文件，作者提交这个
 index.json            # 由 CI 从 plugins/*.json 生成，应用只读这个
+README.md             # 插件列表由 CI 从 plugins/*.json 同步生成
 schema.json           # 字段定义
 scripts/              # 校验与生成脚本（无第三方依赖）
 ```
+
+## 插件列表
+
+下表由 `npm run index` 根据 `plugins/*.json` 生成，请勿手工编辑标记区间内的内容。
+
+<!-- plugins:start -->
+> 共 2 个插件，按 id 排序；版本号链接到 zip，仓库链接到源码。安装入口是 [`index.json`](index.json)。
+
+| 插件 | 说明 | 版本 | 分类 | 标签 | 仓库 |
+| --- | --- | --- | --- | --- | --- |
+| **HTML 编辑器**<br>`html-editor` | HTML 编辑器：源码编辑、分屏预览与保存 | [0.1.0](<https://github.com/Work-Agent/HTMLEditor/releases/download/v0.1.0/html-editor-0.1.0.zip>) | 开发 | <code>html</code> <code>editor</code> <code>preview</code> | [Work-Agent/HTMLEditor](<https://github.com/Work-Agent/HTMLEditor>) |
+| **Markdown 编辑器**<br>`markdown-editor` | 支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器 | [0.1.0](<https://github.com/Work-Agent/MarkdownEditor/releases/download/0.1/markdown-editor-0.1.0.zip>) | 文档 | <code>markdown</code> <code>editor</code> <code>live-preview</code> | [Work-Agent/MarkdownEditor](<https://github.com/Work-Agent/MarkdownEditor>) |
+<!-- plugins:end -->
 
 ## 条目格式
 
@@ -48,7 +62,7 @@ scripts/              # 校验与生成脚本（无第三方依赖）
 2. 计算 `sha256`；
 3. 新增或更新 `plugins/<id>.json`；
 4. 提交 PR。CI 校验字段、id、版本、哈希格式；
-5. 合并后 CI 自动重新生成 `index.json`。
+5. 合并后 CI 自动重新生成 `index.json`，并同步本 README 的插件列表。
 
 新增插件需要人工 review；已有插件只改版本 / 哈希时，CI 通过且 `repo` 与 `source` 主机不变即可自动合并。
 
@@ -90,7 +104,7 @@ App 至少需要：
 - `Pull requests: write`
 - 安装到 `PluginRegistry`
 
-自动合并使用 App token，因此合并后的 `push` 会正常触发 `index.yml`，重新生成 `index.json`。
+自动合并使用 App token，因此合并后的 `push` 会正常触发 `index.yml`，重新生成 `index.json` 与 README 插件列表。
 
 如果启用了 required review，App 不能自动批准，auto-merge 会等待人工 review；要么由人工合并，要么在 ruleset 中为 App 配置 bypass。
 
@@ -98,8 +112,8 @@ App 至少需要：
 
 ```bash
 npm run validate          # 字段与唯一性
-npm run index             # 生成 index.json
-npm run index:check       # 检查 index.json 是否最新
+npm run index             # 生成 index.json 与 README 插件列表
+npm run index:check       # 检查 index.json 与 README 插件列表是否最新
 npm run validate:artifacts # 下载 zip 校验 sha256（需要网络）
 ```
 

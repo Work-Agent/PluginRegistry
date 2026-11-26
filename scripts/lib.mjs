@@ -9,6 +9,9 @@ export const ROOT = process.env.REGISTRY_ROOT
   : SCRIPT_ROOT;
 export const PLUGINS_DIR = join(ROOT, 'plugins');
 export const INDEX_FILE = join(ROOT, 'index.json');
+export const README_FILE = join(ROOT, 'README.md');
+export const README_START = '<!-- plugins:start -->';
+export const README_END = '<!-- plugins:end -->';
 
 const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;
 const VERSION_RE = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
@@ -153,6 +156,99 @@ export function buildIndex(entries) {
     schemaVersion: 1,
     entries,
   };
+}
+
+/** 转义 Markdown 表格单元格内容。 */
+function escapeCell(value) {
+  return String(value)
+    .replaceAll('\\', '\\\\')
+    .replaceAll('|', '\\|')
+    .replace(/\r?\n/g, ' ');
+}
+
+/** 转义链接文字中的方括号。 */
+function escapeLinkText(value) {
+  return escapeCell(value).replace(/([\[\]])/g, '\\$1');
+}
+
+/** 转义 HTML 文本。 */
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+/** 用 HTML code 包裹标签，避免标签里的反引号破坏 Markdown。 */
+function code(value) {
+  const text = String(value).replace(/\r?\n/g, ' ');
+  return `<code>${escapeHtml(text).replaceAll('|', '&#124;')}</code>`;
+}
+
+/** 使用尖括号包住链接地址，避免 URL 里的括号被误解析。 */
+function link(label, href) {
+  return `[${label}](<${href}>)`;
+}
+
+/** 把 repo 压缩成便于阅读的短名称。 */
+function repoLabel(repo) {
+  try {
+    const url = new URL(repo);
+    const path = decodeURIComponent(url.pathname).replace(/^\/|\/$/g, '');
+    if (url.hostname === 'github.com') return path || url.hostname;
+    return path ? `${url.hostname}/${path}` : url.hostname;
+  } catch {
+    return repo;
+  }
+}
+
+/** 生成 README 中两个标记之间的插件列表。 */
+export function buildReadmeSection(entries) {
+  const lines = [
+    `> 共 ${entries.length} 个插件，按 id 排序；版本号链接到 zip，仓库链接到源码。安装入口是 [\`index.json\`](index.json)。`,
+    '',
+  ];
+  if (entries.length === 0) {
+    lines.push('暂无插件。');
+    return lines.join('\n');
+  }
+
+  lines.push(
+    '| 插件 | 说明 | 版本 | 分类 | 标签 | 仓库 |',
+    '| --- | --- | --- | --- | --- | --- |',
+  );
+  for (const entry of entries) {
+    const name = `**${escapeCell(entry.name)}**<br>\`${entry.id}\``;
+    const version = link(escapeLinkText(entry.version), entry.source);
+    const versionCell = entry.deprecated ? `${version}（已下架）` : version;
+    const tags = entry.tags?.length ? entry.tags.map(code).join(' ') : '—';
+    const repository = entry.repo
+      ? link(escapeLinkText(repoLabel(entry.repo)), entry.repo)
+      : '—';
+    const category = entry.category ? escapeCell(entry.category) : '—';
+    lines.push(
+      `| ${name} | ${escapeCell(entry.description)} | ${versionCell} | ${category} | ${tags} | ${repository} |`,
+    );
+  }
+  return lines.join('\n');
+}
+
+/** 用最新插件列表替换 README 中标记区间的内容。 */
+export function renderReadme(readme, entries) {
+  const start = readme.indexOf(README_START);
+  if (start === -1) {
+    throw new Error(`README.md 缺少标记：${README_START}`);
+  }
+  const end = readme.indexOf(README_END, start + README_START.length);
+  if (end === -1) {
+    throw new Error(`README.md 缺少标记：${README_END}`);
+  }
+  return [
+    readme.slice(0, start + README_START.length),
+    buildReadmeSection(entries),
+    readme.slice(end),
+  ].join('\n');
 }
 
 /** 下载 source 并校验 sha256；用于手动 / 定时校验，不放进每次 PR。 */

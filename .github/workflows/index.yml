@@ -21,14 +21,14 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/build-index.mjs --write
-      - name: Commit index
+      - name: Commit index and README
         run: |
-          if git diff --quiet index.json; then
-            echo "index.json 已是最新"
+          if git diff --quiet index.json README.md; then
+            echo "index.json 与 README.md 已是最新"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.json
-          git commit -m "chore: update index.json"
+          git add index.json README.md
+          git commit -m "chore: update index.json and README plugin list"
           git push
