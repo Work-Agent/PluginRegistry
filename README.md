@@ -7,12 +7,13 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 下表由 `npm run index` 根据 `plugins/*.json` 生成，请勿手工编辑标记区间内的内容。
 
 <!-- plugins:start -->
-> 共 2 个插件，按 id 排序；版本号链接到 zip，仓库链接到源码。安装入口是 [`index.json`](index.json)。
+> 共 3 个插件，按 id 排序；版本号链接到 zip，仓库链接到源码。安装入口是 [`index.json`](index.json)。
 
 | 插件 | 说明 | 版本 | 分类 | 标签 | 仓库 |
 | --- | --- | --- | --- | --- | --- |
 | **HTML 编辑器** <code>内置</code><br>`html-editor` | HTML 编辑器：源码编辑、分屏预览与保存 | [0.1.0](<https://github.com/Work-Agent/HTMLEditor/releases/download/v0.1.0/html-editor-0.1.0.zip>) | 开发 | <code>html</code> <code>editor</code> <code>preview</code> | [Work-Agent/HTMLEditor](<https://github.com/Work-Agent/HTMLEditor>) |
 | **Markdown 编辑器** <code>内置</code><br>`markdown-editor` | 支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器 | [0.1.0](<https://github.com/Work-Agent/MarkdownEditor/releases/download/0.1/markdown-editor-0.1.0.zip>) | 文档 | <code>markdown</code> <code>editor</code> <code>live-preview</code> | [Work-Agent/MarkdownEditor](<https://github.com/Work-Agent/MarkdownEditor>) |
+| **纯文本编辑器** <code>内置</code><br>`text-editor` | 字节保真的纯文本 / 配置 / 日志编辑器：保留编码、BOM 与换行 | [0.1.0](<https://github.com/Work-Agent/TextEditor/releases/download/v0.1.0/text-editor-0.1.0.zip>) | 开发 | <code>text</code> <code>editor</code> <code>config</code> <code>yaml</code> <code>toml</code> <code>log</code> <code>encoding</code> | [Work-Agent/TextEditor](<https://github.com/Work-Agent/TextEditor>) |
 <!-- plugins:end -->
 
 ## 提交插件
