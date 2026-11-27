@@ -2,6 +2,24 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "id": "email",
+      "name": "邮件",
+      "description": "IMAP 同步、SMTP 发信与本地缓存的 WorkStudio 邮件插件",
+      "version": "0.2.0",
+      "repo": "https://github.com/Work-Agent/WorkEmail",
+      "source": "https://github.com/Work-Agent/WorkEmail/releases/download/v0.2.0/email-0.2.0.zip",
+      "sha256": "5f0595884803505f2ae83e61dec6235e855e07fb01fd6d3a432b77490b7b1caa",
+      "icon": "messages",
+      "category": "效率",
+      "tags": [
+        "email",
+        "imap",
+        "smtp",
+        "mail",
+        "inbox"
+      ]
+    },
+    {
       "id": "html-editor",
       "name": "HTML 编辑器",
       "description": "HTML 编辑器：源码编辑、分屏预览与保存",
