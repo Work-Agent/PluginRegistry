@@ -1,0 +1,17 @@
+{
+  "id": "xlsx",
+  "name": "Excel 表格",
+  "description": "Excel 单个工作簿（.xlsx）：WorkStudio 新插件框架 + GenOffice Sheets 页面层。命令读写，字节只由引擎产生。",
+  "version": "0.3.0",
+  "repo": "https://github.com/Work-Agent/WorkOffice",
+  "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/xlsx-0.3.0.zip",
+  "sha256": "63203c122dc9a4d0e6bd3ef29dea7b22139a5ed2a3fe10f50b8ef33f2011c463",
+  "icon": "table",
+  "category": "表格",
+  "tags": [
+    "xlsx",
+    "excel",
+    "workbook",
+    "agent"
+  ]
+}

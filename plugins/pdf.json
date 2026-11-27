@@ -1,0 +1,16 @@
+{
+  "id": "pdf",
+  "name": "PDF 文档",
+  "description": "PDF 只读查看器：PDF.js 真字节渲染 + WorkStudio SDK 资源读 / 页面命令",
+  "version": "0.3.0",
+  "repo": "https://github.com/Work-Agent/WorkOffice",
+  "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/pdf-0.3.0.zip",
+  "sha256": "b97304e71b7f8625e3158783c8b6793f199103232cb13d17a93d3273641d5840",
+  "icon": "eye",
+  "category": "文档",
+  "tags": [
+    "pdf",
+    "viewer",
+    "readonly"
+  ]
+}

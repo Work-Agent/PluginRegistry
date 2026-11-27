@@ -1,0 +1,17 @@
+{
+  "id": "pptx",
+  "name": "PowerPoint 演示文稿",
+  "description": "PowerPoint 演示文稿（.pptx）：WorkStudio SDK 文档页插件。打开才写，助手写经页面队列。",
+  "version": "0.3.0",
+  "repo": "https://github.com/Work-Agent/WorkOffice",
+  "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/pptx-0.3.0.zip",
+  "sha256": "394d52d93e4626047cd0cf492c53cfdeb664220d321a3a23f345b09f8fac4109",
+  "icon": "list",
+  "category": "演示",
+  "tags": [
+    "pptx",
+    "powerpoint",
+    "slides",
+    "agent"
+  ]
+}
