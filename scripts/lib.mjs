@@ -15,9 +15,14 @@ export const README_END = '<!-- plugins:end -->';
 
 /** 由注册表决定哪些 id 内置；build-index 会为这些 id 注入 builtin。 */
 export const BUILTIN_PLUGIN_IDS = new Set([
+  'docx',
+  'email',
   'html-editor',
   'markdown-editor',
+  'pdf',
+  'pptx',
   'text-editor',
+  'xlsx',
 ]);
 
 const ID_RE = /^[a-z0-9][a-z0-9._-]*$/;

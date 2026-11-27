@@ -17,7 +17,8 @@
         "smtp",
         "mail",
         "inbox"
-      ]
+      ],
+      "builtin": true
     },
     {
       "id": "html-editor",
