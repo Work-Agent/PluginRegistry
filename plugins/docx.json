@@ -1,0 +1,17 @@
+{
+  "id": "docx",
+  "name": "Word 文档",
+  "description": "Word 文档（.docx）：WorkStudio SDK 文档页插件。页面打开才写，Agent 写经页面队列。",
+  "version": "0.3.0",
+  "repo": "https://github.com/Work-Agent/WorkOffice",
+  "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/docx-0.3.0.zip",
+  "sha256": "d42abd30c3cbbaab463fd2f5b6f7adbdae868faf798e31fded9ca6dfeba58078",
+  "icon": "file-text",
+  "category": "文档",
+  "tags": [
+    "docx",
+    "word",
+    "editor",
+    "agent"
+  ]
+}
