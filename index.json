@@ -2,6 +2,24 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "id": "docx",
+      "name": "Word 文档",
+      "description": "Word 文档（.docx）：WorkStudio SDK 文档页插件。页面打开才写，Agent 写经页面队列。",
+      "version": "0.3.0",
+      "repo": "https://github.com/Work-Agent/WorkOffice",
+      "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/docx-0.3.0.zip",
+      "sha256": "d42abd30c3cbbaab463fd2f5b6f7adbdae868faf798e31fded9ca6dfeba58078",
+      "icon": "file-text",
+      "category": "文档",
+      "tags": [
+        "docx",
+        "word",
+        "editor",
+        "agent"
+      ],
+      "builtin": true
+    },
+    {
       "id": "email",
       "name": "邮件",
       "description": "IMAP 同步、SMTP 发信与本地缓存的 WorkStudio 邮件插件",
@@ -55,6 +73,41 @@
       "builtin": true
     },
     {
+      "id": "pdf",
+      "name": "PDF 文档",
+      "description": "PDF 只读查看器：PDF.js 真字节渲染 + WorkStudio SDK 资源读 / 页面命令",
+      "version": "0.3.0",
+      "repo": "https://github.com/Work-Agent/WorkOffice",
+      "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/pdf-0.3.0.zip",
+      "sha256": "b97304e71b7f8625e3158783c8b6793f199103232cb13d17a93d3273641d5840",
+      "icon": "eye",
+      "category": "文档",
+      "tags": [
+        "pdf",
+        "viewer",
+        "readonly"
+      ],
+      "builtin": true
+    },
+    {
+      "id": "pptx",
+      "name": "PowerPoint 演示文稿",
+      "description": "PowerPoint 演示文稿（.pptx）：WorkStudio SDK 文档页插件。打开才写，助手写经页面队列。",
+      "version": "0.3.0",
+      "repo": "https://github.com/Work-Agent/WorkOffice",
+      "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/pptx-0.3.0.zip",
+      "sha256": "394d52d93e4626047cd0cf492c53cfdeb664220d321a3a23f345b09f8fac4109",
+      "icon": "list",
+      "category": "演示",
+      "tags": [
+        "pptx",
+        "powerpoint",
+        "slides",
+        "agent"
+      ],
+      "builtin": true
+    },
+    {
       "id": "text-editor",
       "name": "纯文本编辑器",
       "description": "字节保真的纯文本 / 配置 / 日志编辑器：保留编码、BOM 与换行",
@@ -72,6 +125,24 @@
         "toml",
         "log",
         "encoding"
+      ],
+      "builtin": true
+    },
+    {
+      "id": "xlsx",
+      "name": "Excel 表格",
+      "description": "Excel 单个工作簿（.xlsx）：WorkStudio 新插件框架 + GenOffice Sheets 页面层。命令读写，字节只由引擎产生。",
+      "version": "0.3.0",
+      "repo": "https://github.com/Work-Agent/WorkOffice",
+      "source": "https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/xlsx-0.3.0.zip",
+      "sha256": "63203c122dc9a4d0e6bd3ef29dea7b22139a5ed2a3fe10f50b8ef33f2011c463",
+      "icon": "table",
+      "category": "表格",
+      "tags": [
+        "xlsx",
+        "excel",
+        "workbook",
+        "agent"
       ],
       "builtin": true
     }

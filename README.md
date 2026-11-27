@@ -7,14 +7,18 @@ WorkStudio 的可安装插件清单。应用读取本仓库的 [`index.json`](in
 下表由 `npm run index` 根据 `plugins/*.json` 生成，请勿手工编辑标记区间内的内容。
 
 <!-- plugins:start -->
-> 共 4 个插件，按 id 排序；版本号链接到 zip，仓库链接到源码。安装入口是 [`index.json`](index.json)。
+> 共 8 个插件，按 id 排序；版本号链接到 zip，仓库链接到源码。安装入口是 [`index.json`](index.json)。
 
 | 插件 | 说明 | 版本 | 分类 | 标签 | 仓库 |
 | --- | --- | --- | --- | --- | --- |
+| **Word 文档** <code>内置</code><br>`docx` | Word 文档（.docx）：WorkStudio SDK 文档页插件。页面打开才写，Agent 写经页面队列。 | [0.3.0](<https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/docx-0.3.0.zip>) | 文档 | <code>docx</code> <code>word</code> <code>editor</code> <code>agent</code> | [Work-Agent/WorkOffice](<https://github.com/Work-Agent/WorkOffice>) |
 | **邮件** <code>内置</code><br>`email` | IMAP 同步、SMTP 发信与本地缓存的 WorkStudio 邮件插件 | [0.2.0](<https://github.com/Work-Agent/WorkEmail/releases/download/v0.2.0/email-0.2.0.zip>) | 效率 | <code>email</code> <code>imap</code> <code>smtp</code> <code>mail</code> <code>inbox</code> | [Work-Agent/WorkEmail](<https://github.com/Work-Agent/WorkEmail>) |
 | **HTML 编辑器** <code>内置</code><br>`html-editor` | HTML 编辑器：源码编辑、分屏预览与保存 | [0.1.0](<https://github.com/Work-Agent/HTMLEditor/releases/download/v0.1.0/html-editor-0.1.0.zip>) | 开发 | <code>html</code> <code>editor</code> <code>preview</code> | [Work-Agent/HTMLEditor](<https://github.com/Work-Agent/HTMLEditor>) |
 | **Markdown 编辑器** <code>内置</code><br>`markdown-editor` | 支持 Live Preview、表格、数学公式与 Mermaid 的 Markdown 编辑器 | [0.1.0](<https://github.com/Work-Agent/MarkdownEditor/releases/download/0.1/markdown-editor-0.1.0.zip>) | 文档 | <code>markdown</code> <code>editor</code> <code>live-preview</code> | [Work-Agent/MarkdownEditor](<https://github.com/Work-Agent/MarkdownEditor>) |
+| **PDF 文档** <code>内置</code><br>`pdf` | PDF 只读查看器：PDF.js 真字节渲染 + WorkStudio SDK 资源读 / 页面命令 | [0.3.0](<https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/pdf-0.3.0.zip>) | 文档 | <code>pdf</code> <code>viewer</code> <code>readonly</code> | [Work-Agent/WorkOffice](<https://github.com/Work-Agent/WorkOffice>) |
+| **PowerPoint 演示文稿** <code>内置</code><br>`pptx` | PowerPoint 演示文稿（.pptx）：WorkStudio SDK 文档页插件。打开才写，助手写经页面队列。 | [0.3.0](<https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/pptx-0.3.0.zip>) | 演示 | <code>pptx</code> <code>powerpoint</code> <code>slides</code> <code>agent</code> | [Work-Agent/WorkOffice](<https://github.com/Work-Agent/WorkOffice>) |
 | **纯文本编辑器** <code>内置</code><br>`text-editor` | 字节保真的纯文本 / 配置 / 日志编辑器：保留编码、BOM 与换行 | [0.1.0](<https://github.com/Work-Agent/TextEditor/releases/download/v0.1.0/text-editor-0.1.0.zip>) | 开发 | <code>text</code> <code>editor</code> <code>config</code> <code>yaml</code> <code>toml</code> <code>log</code> <code>encoding</code> | [Work-Agent/TextEditor](<https://github.com/Work-Agent/TextEditor>) |
+| **Excel 表格** <code>内置</code><br>`xlsx` | Excel 单个工作簿（.xlsx）：WorkStudio 新插件框架 + GenOffice Sheets 页面层。命令读写，字节只由引擎产生。 | [0.3.0](<https://github.com/Work-Agent/WorkOffice/releases/download/v0.3.0/xlsx-0.3.0.zip>) | 表格 | <code>xlsx</code> <code>excel</code> <code>workbook</code> <code>agent</code> | [Work-Agent/WorkOffice](<https://github.com/Work-Agent/WorkOffice>) |
 <!-- plugins:end -->
 
 ## 提交插件
